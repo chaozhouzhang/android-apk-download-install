@@ -1,4 +1,4 @@
-package me.chaozhouzhang.apkdownloadinstall;
+package me.chaozhouzhang.apkdownloadinstall.download;
 
 /**
  * Created on 18/9/12 12:17

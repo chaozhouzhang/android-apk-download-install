@@ -1,4 +1,4 @@
-package me.chaozhouzhang.apkdownloadinstall;
+package me.chaozhouzhang.apkdownloadinstall.download;
 
 import android.text.TextUtils;
 
@@ -10,7 +10,7 @@ import java.security.NoSuchAlgorithmException;
  *
  * @author zhangchaozhou
  */
-public class Md5 {
+public class Md5Utils {
 
     /**
      * md5编码
@@ -24,7 +24,7 @@ public class Md5 {
         }
         MessageDigest md5;
         try {
-            md5 = MessageDigest.getInstance("Md5");
+            md5 = MessageDigest.getInstance("Md5Utils");
             byte[] bytes = md5.digest(string.getBytes());
             String result = "";
             for (byte b : bytes) {

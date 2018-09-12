@@ -1,8 +1,7 @@
-package me.chaozhouzhang.apkdownloadinstall;
+package me.chaozhouzhang.apkdownloadinstall.download;
 
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -35,8 +34,8 @@ public class OkhttpDownloader {
      * @param fileUrl     文件url
      * @param destFileDir 存储目标目录
      */
-    public <T> void downLoadFile(String fileUrl, final String destFileDir, String suffix, final ReqProgressCallBack<T> callBack) {
-        final String fileName = Md5.encode(fileUrl) + "." + suffix;
+    public <T> void downLoadFile(String fileUrl, final String destFileDir, final String suffix, final ReqProgressCallBack<T> callBack) {
+        final String fileName = Md5Utils.encode(fileUrl) + "." + suffix;
         final File file = new File(destFileDir, fileName);
         if (file.exists()) {
             //TODO 已经存在下载好的安装包，则直接安装
@@ -54,43 +53,55 @@ public class OkhttpDownloader {
 
             @Override
             public void onResponse(Call call, Response response) {
-                InputStream is = null;
-                byte[] buf = new byte[2048];
-                int len;
-                FileOutputStream fos = null;
-                try {
-                    long total = response.body().contentLength();
-                    long current = 0;
-                    is = response.body().byteStream();
-                    fos = new FileOutputStream(file);
-                    while ((len = is.read(buf)) != -1) {
-                        current += len;
-                        fos.write(buf, 0, len);
-                        //TODO 回调下载进度
-                        Log.e("download progress", total + "-" + current);
-                        progressCallBack(total, current, callBack);
-                    }
-                    fos.flush();
-                    //TODO 下载成功
-                    successCallBack((T) file, callBack);
-                } catch (IOException e) {
-                    //TODO 下载出错
-                    failedCallBack(e, callBack);
-                } finally {
-                    try {
-                        if (is != null) {
-                            is.close();
-                        }
-                        if (fos != null) {
-                            fos.close();
-                        }
-                    } catch (IOException e) {
-                        //TODO 下载出错
-                        failedCallBack(e, callBack);
-                    }
-                }
+
+                handleResponse(response, file, callBack);
             }
         });
+    }
+
+    /**
+     * 将文件写入外部存储器
+     *
+     * @param response
+     * @param file
+     * @param callBack
+     * @param <T>
+     */
+    private <T> void handleResponse(Response response, File file, ReqProgressCallBack<T> callBack) {
+        InputStream is = null;
+        byte[] buf = new byte[2048];
+        int len;
+        FileOutputStream fos = null;
+        try {
+            long total = response.body().contentLength();
+            long current = 0;
+            is = response.body().byteStream();
+            fos = new FileOutputStream(file);
+            while ((len = is.read(buf)) != -1) {
+                current += len;
+                fos.write(buf, 0, len);
+                //TODO 回调下载进度
+                progressCallBack(total, current, callBack);
+            }
+            fos.flush();
+            //TODO 下载成功
+            successCallBack((T) file, callBack);
+        } catch (IOException e) {
+            //TODO 下载出错
+            failedCallBack(e, callBack);
+        } finally {
+            try {
+                if (is != null) {
+                    is.close();
+                }
+                if (fos != null) {
+                    fos.close();
+                }
+            } catch (IOException e) {
+                //TODO 下载出错
+                failedCallBack(e, callBack);
+            }
+        }
     }
 
 
@@ -107,7 +118,6 @@ public class OkhttpDownloader {
             @Override
             public void run() {
                 if (callBack != null) {
-                    Log.e("progressCallBack", total + "-" + current);
                     callBack.onProgress(total, current);
                 }
             }

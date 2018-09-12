@@ -1,4 +1,4 @@
-package me.chaozhouzhang.apkdownloadinstall;
+package me.chaozhouzhang.apkdownloadinstall.install;
 
 import android.content.Context;
 import android.content.Intent;
@@ -7,7 +7,6 @@ import android.os.Build;
 import android.support.v4.content.FileProvider;
 
 import java.io.File;
-import java.math.BigDecimal;
 
 /**
  * @author zhangchaozhou
@@ -26,7 +25,7 @@ public final class AppUtils {
     public static void installApk(Context context, File file) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        //TODO Android 8.0需要增加此标志 FLAG_GRANT_READ_URI_PERMISSION
+        //TODO Android 8.0需要增加此标志 FLAG_GRANT_READ_URI_PERMISSION，对目标应用临时授权该Uri所代表的文件
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         intent.setDataAndType(getUriForFile(context, file), "application/vnd.android.package-archive");
         context.startActivity(intent);
@@ -41,9 +40,6 @@ public final class AppUtils {
      * @return
      */
     public static Uri getUriForFile(Context context, File file) {
-        if (context == null || file == null) {
-            throw new NullPointerException();
-        }
         Uri uri;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             /**
@@ -57,33 +53,6 @@ public final class AppUtils {
     }
 
 
-    /**
-     * 除法
-     *
-     * @param v1
-     * @param v2
-     * @param scale
-     * @return
-     */
-    public static double div(double v1, double v2, int scale) {
-        if (scale < 0) {
-            throw new IllegalArgumentException(" the scale must be a positive integer or zero");
-        }
-        BigDecimal b1 = new BigDecimal(Double.toString(v1));
-        BigDecimal b2 = new BigDecimal(Double.toString(v2));
-        return b1.divide(b2, scale, BigDecimal.ROUND_HALF_UP).doubleValue();
-    }
 
-
-    /**
-     * 计算百分比
-     *
-     * @param v1
-     * @param v2
-     * @return
-     */
-    public static int getPercent(double v1, double v2) {
-        return (int) (div(v1, v2, 2) * 100);
-    }
 
 }

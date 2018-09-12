@@ -19,7 +19,11 @@ import android.widget.Toast;
 
 import java.io.File;
 
-import static me.chaozhouzhang.apkdownloadinstall.AppUtils.getPercent;
+import me.chaozhouzhang.apkdownloadinstall.download.OkhttpDownloader;
+import me.chaozhouzhang.apkdownloadinstall.download.ReqProgressCallBack;
+import me.chaozhouzhang.apkdownloadinstall.install.AppUtils;
+
+import static me.chaozhouzhang.apkdownloadinstall.download.MathUtils.getPercent;
 
 /**
  * @author zhangchaozhou
@@ -52,15 +56,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btn_download_install:
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     //TODO Android 6.0 动态访问写入外部存储器权限
+                    /**
+                     * TODO 当只用到读取外部存储器功能的时候只需要用到：READ_EXTERNAL_STORAGE。
+                     * TODO 当需要用到写入外部存储器功能的时候必须要用到：WRITE_EXTERNAL_STORAGE；此时包含了READ_EXTERNAL_STORAGE，读取外部存储器时不需要再申请READ_EXTERNAL_STORAGE。
+                     */
+                    //TODO 此处如果为READ_EXTERNAL_STORAGE，则在8.0会有Permission Denied错误出现
                     boolean write = (ContextCompat.checkSelfPermission(mContext, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED);
                     String[] permissions = new String[]{};
                     if (write) {
                         downloadInstall();
                     } else {
-                        if (!write) {
-                            permissions = new String[permissions.length + 1];
-                            permissions[permissions.length - 1] = Manifest.permission.WRITE_EXTERNAL_STORAGE;
-                        }
+                        permissions = new String[permissions.length + 1];
+                        permissions[permissions.length - 1] = Manifest.permission.WRITE_EXTERNAL_STORAGE;
                         ActivityCompat.requestPermissions(this, permissions, REQUEST_EXTERNAL_STORAGE);
                     }
                 } else {

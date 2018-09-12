@@ -16,7 +16,7 @@
         android:paddingLeft="16dp"
         android:layout_margin="16dp"
         android:background="@drawable/shape_edt"
-        android:hint="请输入你需要下载安装的apk的网络地址"/>
+        android:hint="请输入apk网址"/>
 
 
     <Button
