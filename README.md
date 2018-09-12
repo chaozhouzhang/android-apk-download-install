@@ -1,6 +1,6 @@
 # android-apk-download-install
 安卓下载安装apk的各个版本适配，目前已适配到9.0。
-
+[toc]
 ## 1、网络访问权限
 ```
 <!--访问网络权限：下载安装包-->
@@ -111,7 +111,7 @@ public static Uri getUriForFile(Context context, File file) {
     return uri;
 }
 ```
-### 3.2、Android8.0
+### 3.2、Android8.0 Uri权限
 ```
 /**
  * 安装外置存储器的apk
