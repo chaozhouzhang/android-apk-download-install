@@ -1,25 +1,25 @@
 # android-apk-download-install
 安卓下载安装apk的各个版本适配，目前已适配到9.0。
 
-##1、网络访问权限
+## 1、网络访问权限
 ```
 <!--访问网络权限：下载安装包-->
 <uses-permission android:name="android.permission.INTERNET"/>
 ```
 
-##2、外部存储器权限
+## 2、外部存储器权限
 ```
 <!--写入外部存储器权限：写入安装包-->
 <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 ```
 
-###2.1、Android 6.0动态获取权限
+### 2.1、Android 6.0动态获取权限
  Android 6.0开始获取外部存储器权限需要动态获取。
  
-###2.2、Android 8.0动态获取权限变化
-####2.2.1、Android 8.0之前
+### 2.2、Android 8.0动态获取权限变化
+#### 2.2.1、Android 8.0之前
 Android 8.0之前，只要申请了同组权限中的一个，同组中的其他在清单文件中列出的权限也会被同时授予或拒绝。
-####2.2.2、Android 8.0开始
+#### 2.2.2、Android 8.0开始
 Android 8.0开始，系统只会授予应用明确请求的权限，但是一旦用户为应用授予某个权限，则所有后续对该权限组中其他权限的请求都将被自动批准，但是还是需要去申请。
 
 ```
@@ -57,15 +57,15 @@ public void onRequestPermissionsResult(int requestCode, @NonNull String[] permis
 }
 ```
 
-###2.3、读取和写入外部存储器的区别
+### 2.3、读取和写入外部存储器的区别
 ```
  * TODO 当只用到读取外部存储器功能的时候只需要用到：READ_EXTERNAL_STORAGE。
  * TODO 当需要用到写入外部存储器功能的时候必须要用到：WRITE_EXTERNAL_STORAGE；此时包含了READ_EXTERNAL_STORAGE，读取外部存储器时不需要再申请READ_EXTERNAL_STORAGE。
 ```
-##3、文件访问权限
-###3.1、Android7.0文件提供器获取Uri
+## 3、文件访问权限
+### 3.1、Android7.0文件提供器获取Uri
 Android7.0开始获取文件的Uri需要使用FileProvider进行获取。
-####3.1.1、AndroidManifest.xml
+#### 3.1.1、AndroidManifest.xml
 ```
 <!--TODO 此处需要注意Android 7.0：authorities要与获取文件uri的authority一致！-->
 <provider
@@ -78,7 +78,7 @@ Android7.0开始获取文件的Uri需要使用FileProvider进行获取。
         android:resource="@xml/file_paths"/>
 </provider>
 ```
-####3.1.2、res/xml/file_paths.xml
+#### 3.1.2、res/xml/file_paths.xml
 
 ```
 <?xml version="1.0" encoding="utf-8"?>
@@ -89,7 +89,7 @@ Android7.0开始获取文件的Uri需要使用FileProvider进行获取。
         path="/"/>
 </paths>
 ```
-####3.1.3、获取文件Uri
+#### 3.1.3、获取文件Uri
 ```java
 /**
  * 获取文件的Uri地址
@@ -111,7 +111,7 @@ public static Uri getUriForFile(Context context, File file) {
     return uri;
 }
 ```
-###3.2、Android8.0
+### 3.2、Android8.0
 ```
 /**
  * 安装外置存储器的apk
@@ -131,7 +131,7 @@ public static void installApk(Context context, File file) {
 ```
 
 
-##4、应用安装权限
+## 4、应用安装权限
 Android8.0开始安装应用需要请求安装包权限。
 ```
 <!--请求安装包权限：Android 8.0 -->
