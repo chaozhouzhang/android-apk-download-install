@@ -2,6 +2,6 @@
 <paths xmlnsandroid="http://schemas.android.com/apk/res/android">
     <!-- external-path代表的根目录-->
     <external-path
-        name="file_path"
-        path="/"/>
+            name="file_path"
+            path="/"/>
 </paths>

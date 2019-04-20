@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center"
-    android:orientation="vertical"
-    tools:context=".MainActivity">
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        tools:context=".MainActivity">
 
 
     <EditText
-        android:id="@+id/edt_apk_url"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:paddingLeft="16dp"
-        android:layout_margin="16dp"
-        android:background="@drawable/shape_edt"
-        android:hint="请输入apk网址"/>
+            android:id="@+id/edt_apk_url"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:paddingLeft="16dp"
+            android:layout_margin="16dp"
+            android:background="@drawable/shape_edt"
+            android:hint="请输入apk网址"/>
 
 
     <Button
-        android:id="@+id/btn_download_install"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:background="@drawable/shape_btn"
-        android:text="下载安装"
-        android:textColor="#FFFFFF"/>
+            android:id="@+id/btn_download_install"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:background="@drawable/shape_btn"
+            android:text="下载安装"
+            android:textColor="#FFFFFF"/>
 
 </LinearLayout>
